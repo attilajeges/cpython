@@ -394,9 +394,12 @@ def _get_command_stdout(command, *args):
 # we'll return the first of the latter found if that's all the machine has.
 #
 # See https://en.wikipedia.org/wiki/MAC_address#Universal_vs._local
+#
+# MAC address 00:00:00:00:00:00 is invalid and not accepted as a universally
+# administered MAC address.
 
 def _is_universal(mac):
-    return not (mac & (1 << 41))
+    return (mac != 0) and not (mac & (1 << 41))
 
 
 def _find_mac_near_keyword(command, args, keywords, get_word_index):
